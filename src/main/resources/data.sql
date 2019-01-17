@@ -10,6 +10,6 @@ INSERT INTO company (id, company_name, vat_in, address_id) VALUES
 (2, 'WARBUD S.A.','823-234-543', 1);
 
 INSERT INTO user(id, email, phone_number, password, first_name, last_name, address_id, company_id, user_type) VALUES
-(1, 'adam.poniekad@budimex.pl', '111-222-333', '1234567890', 'Adam', 'Poniekąd', 1, 1, 'ADMIN'),
-(2, 'grazyna.idzzesz@warbud.pl', '987-654-321', '1234567890', 'Grażyna', 'Idźżesz', 3, 2, 'VIEWER'),
+(1, 'adam.poniekad@budimex.pl', '111-222-333', '123abc', 'Adam', 'Poniekąd', 1, 1, 'ADMIN'),
+(2, 'grazyna.idzzesz@warbud.pl', '987-654-321', '12345', 'Grażyna', 'Idźżesz', 3, 2, 'VIEWER'),
 (3, 'janina.rambo@warbud.pl', '123-456-789', 'abcd1234', 'Janina', 'Rambo', 2, 2, 'CUSTOMER');
