@@ -36,10 +36,10 @@ public class UserServiceImplTest {
         //GIVEN
         //WHEN
         Long id = 100L;
-        userService.findById(id);
         //THEN
         expectedException.expect(UserNotFoundException.class);
         expectedException.expectMessage("User with {id} = " + id + " not found.");
+        userService.findById(id);
     }
 
 }
