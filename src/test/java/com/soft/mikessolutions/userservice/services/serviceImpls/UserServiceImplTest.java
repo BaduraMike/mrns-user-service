@@ -24,7 +24,7 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldFindAllUsers() {
-        Assert.assertEquals(3, userService.findAll().size());
+        Assert.assertFalse(userService.findAll().isEmpty());
     }
 
     @Test

@@ -29,17 +29,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User object) {
-        return null;
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public void delete(User object) {
-
+    public void delete(User user) {
+        userRepository.delete(user);
     }
 
     @Override
-    public void deleteById(Long aLong) {
-
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 }
