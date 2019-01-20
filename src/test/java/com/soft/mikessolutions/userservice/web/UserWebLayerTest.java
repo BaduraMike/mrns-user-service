@@ -34,4 +34,12 @@ public class UserWebLayerTest {
         this.mockMvc.perform(get("/users/1")).andDo(print()).andExpect(status().isFound());
     }
 
+    @Test
+    public void getUserById1ShouldReturnHttpStatus404NotFound() throws Exception {
+        long id = userService.findAll().size() + 1;
+        String pathToNonExistingUser = "/users/" + id;
+
+        this.mockMvc.perform(get(pathToNonExistingUser)).andDo(print()).andExpect(status().isNotFound());
+    }
+
 }
