@@ -20,13 +20,18 @@ public class Address extends BaseEntity {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST,
             mappedBy = "address")
-    private Set<User> customers;
+    private Set<User> users;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST,
             mappedBy = "address")
     private Set<Company> companies;
 
     public Address() {
+    }
+
+    @Override
+    public Long getId() {
+        return id;
     }
 
     public String getStreet() {
@@ -49,8 +54,8 @@ public class Address extends BaseEntity {
         return country;
     }
 
-    public Set<User> getCustomers() {
-        return customers;
+    public Set<User> getUsers() {
+        return users;
     }
 
     public Set<Company> getCompanies() {

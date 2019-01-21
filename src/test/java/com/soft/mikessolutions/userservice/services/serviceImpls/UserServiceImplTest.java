@@ -28,8 +28,10 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void shouldFindUserById2() {
-        Assert.assertEquals("grazyna.idzzesz@warbud.pl", userService.findById(2L).getEmail());
+    public void shouldFindUserByExistingId() {
+        long id = userService.findAll().size();
+
+        Assert.assertNotNull(userService.findById(id));
     }
 
     @Test
