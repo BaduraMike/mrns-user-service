@@ -56,4 +56,36 @@ public class User extends BaseEntity {
     public UserType getUserType() {
         return userType;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
 }

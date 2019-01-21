@@ -7,12 +7,11 @@ import com.soft.mikessolutions.userservice.entities.User;
 import com.soft.mikessolutions.userservice.services.UserService;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,10 +38,18 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
     public Resource<User> one(@PathVariable Long id) {
         User user = userService.findById(id);
 
         return assembler.toResource(user);
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<?> newUser(@RequestBody User newUser) throws URISyntaxException {
+        Resource<User> resource = assembler.toResource(userService.save(newUser));
+
+        return ResponseEntity
+                .created(new URI(resource.getId().expand().getHref()))
+                .body(resource);
     }
 }
