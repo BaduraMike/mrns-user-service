@@ -1,5 +1,6 @@
 package com.soft.mikessolutions.userservice.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -24,6 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class UserWebLayerTest {
 
+    private final String BASE_URL = "/users";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -32,13 +37,13 @@ public class UserWebLayerTest {
 
     @Test
     public void getAllUsersShouldReturnHttpStatus200Ok() throws Exception {
-        this.mockMvc.perform(get("/users")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get(BASE_URL)).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
     public void getUserByExistingIdShouldReturnHttpStatus200Ok() throws Exception {
         long id = userService.findAll().size();
-        String urlToExistingUser = "/users/" + id;
+        String urlToExistingUser = BASE_URL + "/" + id;
 
         this.mockMvc.perform(get(urlToExistingUser)).andDo(print()).andExpect(status().isOk());
     }
@@ -46,14 +51,13 @@ public class UserWebLayerTest {
     @Test
     public void getUserByNonExistingIdShouldReturnHttpStatus404NotFound() throws Exception {
         long id = userService.findAll().size() + 1;
-        String urlToNonExistingUser = "/users/" + id;
+        String urlToNonExistingUser = BASE_URL + "/" + id;
 
         this.mockMvc.perform(get(urlToNonExistingUser)).andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test
     public void postUserShouldReturnHttpStatus201Created() throws Exception {
-        String url = "/users";
         User user = new User();
         user.setFirstName("Jan");
         user.setLastName("Janowski");
@@ -62,7 +66,45 @@ public class UserWebLayerTest {
         ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
         String requestJson = writer.writeValueAsString(user);
 
-        this.mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON_UTF8)
+        this.mockMvc.perform(post(BASE_URL).contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(requestJson)).andDo(print()).andExpect(status().isCreated());
+    }
+
+    @Test
+    public void putUserByExistingIdShouldUpdateUserAndReturnHttpStatus204NoContent() throws Exception {
+        long id = userService.findAll().size();
+        MockHttpServletRequestBuilder builder = createJsonRequest(id, "Konstanty","dzikus@foo.pl");
+
+        this.mockMvc.perform(builder)
+                .andExpect(status()
+                        .isNoContent())
+                .andDo(print());
+    }
+
+    @Test
+    public void putUserByNonExistingIdShouldReturnHttpStatus404NotFound() throws Exception {
+        long id = userService.findAll().size() + 1;
+        MockHttpServletRequestBuilder builder = createJsonRequest(id, "Kordian", "meow@bar.pl");
+
+        this.mockMvc.perform(builder)
+                .andExpect(status()
+                        .isNotFound())
+                .andDo(print());
+    }
+
+    private MockHttpServletRequestBuilder createJsonRequest(Long id, String lastName, String email) throws JsonProcessingException {
+        User user = new User();
+        user.setLastName(lastName);
+        user.setEmail(email);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = writer.writeValueAsString(user);
+
+        return MockMvcRequestBuilders.put(BASE_URL + "/" + id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(requestJson);
     }
 }

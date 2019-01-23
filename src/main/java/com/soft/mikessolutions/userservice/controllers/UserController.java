@@ -7,6 +7,7 @@ import com.soft.mikessolutions.userservice.entities.User;
 import com.soft.mikessolutions.userservice.services.UserService;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,7 @@ public class UserController {
                 linkTo(methodOn(UserController.class).all()).withSelfRel());
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/{id:\\d+}")
     public Resource<User> one(@PathVariable Long id) {
         User user = userService.findById(id);
 
@@ -50,6 +51,26 @@ public class UserController {
 
         return ResponseEntity
                 .created(new URI(resource.getId().expand().getHref()))
+                .body(resource);
+    }
+
+    @PutMapping("/users/{id:\\d+}")
+    public ResponseEntity<?> replaceUser(@RequestBody User newUser,
+                                         @PathVariable Long id) {
+        User user = userService.findById(id);
+        user.setFirstName(newUser.getFirstName());
+        user.setLastName(newUser.getLastName());
+        user.setEmail(newUser.getEmail());
+        user.setPassword(newUser.getPassword());
+        user.setPhoneNumber(newUser.getPhoneNumber());
+        user.setAddress(newUser.getAddress());
+        user.setCompany(newUser.getCompany());
+        user.setUserType(newUser.getUserType());
+        userService.save(user);
+
+        Resource<User> resource = assembler.toResource(user);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
                 .body(resource);
     }
 }
