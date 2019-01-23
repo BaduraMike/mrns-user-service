@@ -73,7 +73,7 @@ public class UserWebLayerTest {
     @Test
     public void putUserByExistingIdShouldUpdateUserAndReturnHttpStatus204NoContent() throws Exception {
         long id = userService.findAll().size();
-        MockHttpServletRequestBuilder builder = createJsonRequest(id, "Konstanty","dzikus@foo.pl");
+        MockHttpServletRequestBuilder builder = createJsonRequest(id, "Konstanty", "dzikus@foo.pl");
 
         this.mockMvc.perform(builder)
                 .andExpect(status()
@@ -90,6 +90,32 @@ public class UserWebLayerTest {
                 .andExpect(status()
                         .isNotFound())
                 .andDo(print());
+    }
+
+    @Test
+    public void deleteUserByExistingIdShouldReturnHttpStatus204NoContent() throws Exception {
+        long id = userService.findAll().size();
+        String urlToExistingUser = BASE_URL + "/" + id;
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .delete(urlToExistingUser)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteUserByNonExistingIdShouldReturnHttpStatus404NotFound() throws Exception {
+        long id = userService.findAll().size() + 1;
+        String urlToExistingUser = BASE_URL + "/" + id;
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .delete(urlToExistingUser)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 
     private MockHttpServletRequestBuilder createJsonRequest(Long id, String lastName, String email) throws JsonProcessingException {
