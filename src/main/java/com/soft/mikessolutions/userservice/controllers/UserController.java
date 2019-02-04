@@ -35,7 +35,7 @@ public class UserController {
                 .collect(Collectors.toList());
 
         return new Resources<>(users,
-                linkTo(methodOn(UserController.class).all()).withSelfRel());
+                linkTo(methodOn(UserController.class).all()).withRel("users"));
     }
 
     @GetMapping("/users/{id:\\d+}")
@@ -75,7 +75,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id:\\d+}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
 
         return ResponseEntity.noContent().build();

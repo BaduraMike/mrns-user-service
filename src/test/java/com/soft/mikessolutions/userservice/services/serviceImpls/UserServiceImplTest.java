@@ -54,7 +54,7 @@ public class UserServiceImplTest {
         userService.save(newUser);
         int postSaveUserCount = userService.findAll().size();
         //THEN
-        Assert.assertEquals(1,postSaveUserCount - preSaveUserCount);
+        Assert.assertEquals(1, postSaveUserCount - preSaveUserCount);
     }
 
 
@@ -68,7 +68,7 @@ public class UserServiceImplTest {
         userService.delete(newUser);
         int postDeleteUserCount = userService.findAll().size();
         //THEN
-        Assert.assertEquals(1,preDeleteUserCount - postDeleteUserCount);
+        Assert.assertEquals(1, preDeleteUserCount - postDeleteUserCount);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class UserServiceImplTest {
         userService.deleteById(newUser.getId());
         int postDeleteUserCount = userService.findAll().size();
         //THEN
-        Assert.assertEquals(1,preDeleteUserCount - postDeleteUserCount);
+        Assert.assertEquals(1, preDeleteUserCount - postDeleteUserCount);
     }
 
 
