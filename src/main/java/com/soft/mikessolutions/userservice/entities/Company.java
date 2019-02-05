@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Company extends BaseEntity{
+public class Company extends BaseEntity {
 
     private String companyName;
     private String vatIn;
