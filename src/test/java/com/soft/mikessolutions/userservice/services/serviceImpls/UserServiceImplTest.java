@@ -72,7 +72,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void shouldDeleteUserById1() {
+    public void shouldDeleteUserByExistingId() {
         //GIVEN
         User newUser = new User();
         userService.save(newUser);
