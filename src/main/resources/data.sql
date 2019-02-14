@@ -5,7 +5,7 @@ INSERT INTO address (id, street, street_number, post_code, city, country) VALUES
 (4, 'Długa', '325', '02-653', 'Krzywonogi', 'POLAND'),
 (5, 'Mitchell Road', '1', 'MK43 0AL', 'Bedfordshire', 'United Kingdom');
 
-INSERT INTO company (id, company_name, vat_in, address_id) VALUES
+INSERT INTO company (id, company_name, vat_id_number, address_id) VALUES
 (1, 'BUDIMEX S.A.','894-321-123', 3),
 (2, 'WARBUD S.A.','823-234-543', 1);
 
