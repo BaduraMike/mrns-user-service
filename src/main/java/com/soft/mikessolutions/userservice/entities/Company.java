@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 public class Company extends BaseEntity {
 
     private String companyName;
-    private String vatIn;
+    private String vatIdNumber;
     @ManyToOne
     private Address address;
 
@@ -18,8 +18,8 @@ public class Company extends BaseEntity {
         return companyName;
     }
 
-    public String getVatIn() {
-        return vatIn;
+    public String vatIdNumber() {
+        return vatIdNumber;
     }
 
     public Address getAddress() {

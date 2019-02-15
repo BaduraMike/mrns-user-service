@@ -1,6 +1,6 @@
-package com.soft.mikessolutions.userservice.advices;
+package com.soft.mikessolutions.userservice.advices.address;
 
-import com.soft.mikessolutions.userservice.exceptions.user.UserNotFoundException;
+import com.soft.mikessolutions.userservice.exceptions.address.AddressNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class UserNotFoundAdvice {
+public class AddressNotFoundAdvice {
 
     @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(AddressNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String userNotFoundHandler(UserNotFoundException ex) {
+    String addressNotFoundHandler(AddressNotFoundException ex) {
         return ex.getMessage();
     }
 }

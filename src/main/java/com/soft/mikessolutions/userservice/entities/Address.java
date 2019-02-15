@@ -29,6 +29,14 @@ public class Address extends BaseEntity {
     public Address() {
     }
 
+    public Address(String street, String streetNumber, String postCode, String city, String country) {
+        this.street = street;
+        this.streetNumber = streetNumber;
+        this.postCode = postCode;
+        this.city = city;
+        this.country = country;
+    }
+
     @Override
     public Long getId() {
         return id;
@@ -60,5 +68,25 @@ public class Address extends BaseEntity {
 
     public Set<Company> getCompanies() {
         return companies;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

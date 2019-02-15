@@ -1,6 +1,7 @@
 package com.soft.mikessolutions.userservice.services.serviceImpls;
 
 import com.soft.mikessolutions.userservice.entities.Address;
+import com.soft.mikessolutions.userservice.exceptions.address.AddressAlreadyExistsException;
 import com.soft.mikessolutions.userservice.exceptions.address.AddressNotFoundException;
 import com.soft.mikessolutions.userservice.services.AddressService;
 import org.junit.Assert;
@@ -102,5 +103,18 @@ public class AddressServiceImplTest {
         int postDeleteAddressCount = addressService.findAll().size();
         //THEN
         Assert.assertEquals(1, preDeleteAddressCount - postDeleteAddressCount);
+    }
+
+    @Test
+    public void shouldThrowAddressAlreadyFoundExceptionForAddressWithExistingParameters() {
+        //GIVEN
+        //WHEN
+        Long id = (long) (addressService.findAll().size());
+        Address existingAddress = addressService.findById(id);
+        //THEN
+        expectedException.expect(AddressAlreadyExistsException.class);
+        expectedException.expectMessage("Address with the given parameters already exists with {id} = " + id);
+        addressService.checkExistence(existingAddress.getStreet(),existingAddress.getStreetNumber(),existingAddress.getPostCode(),
+                existingAddress.getCity(), existingAddress.getCountry());
     }
 }
