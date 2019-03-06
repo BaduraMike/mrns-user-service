@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @RestController
 public class UserController {
     private final UserService userService;
-
     private final UserResourceAssembler assembler;
 
     UserController(UserService userService,

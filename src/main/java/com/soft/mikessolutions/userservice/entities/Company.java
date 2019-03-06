@@ -1,10 +1,13 @@
 package com.soft.mikessolutions.userservice.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Company extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String companyName;
     private String vatIdNumber;
@@ -14,11 +17,16 @@ public class Company extends BaseEntity {
     public Company() {
     }
 
+    @Override
+    public Long getId() {
+        return id;
+    }
+
     public String getCompanyName() {
         return companyName;
     }
 
-    public String vatIdNumber() {
+    public String getVatIdNumber() {
         return vatIdNumber;
     }
 
