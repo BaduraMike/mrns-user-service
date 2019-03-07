@@ -41,4 +41,10 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteById(Long id) {
         companyRepository.deleteById(findById(id).getId());
     }
+
+    @Override
+    public Company findByVatIdNumber(String vatIdNumber) {
+        return companyRepository.findByVatIdNumber(vatIdNumber)
+                .orElseThrow(() -> new CompanyNotFoundException(vatIdNumber));
+    }
 }

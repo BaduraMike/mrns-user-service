@@ -19,18 +19,18 @@ import java.util.stream.Collectors;
 @RestController
 public class UserController {
     private final UserService userService;
-    private final UserResourceAssembler assembler;
+    private final UserResourceAssembler userAssembler;
 
     UserController(UserService userService,
                    UserResourceAssembler assembler) {
         this.userService = userService;
-        this.assembler = assembler;
+        this.userAssembler = assembler;
     }
 
     @GetMapping("/users")
     public Resources<Resource<User>> all() {
         List<Resource<User>> users = userService.findAll().stream()
-                .map(assembler::toResource)
+                .map(userAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(users,
@@ -41,12 +41,12 @@ public class UserController {
     public Resource<User> one(@PathVariable Long id) {
         User user = userService.findById(id);
 
-        return assembler.toResource(user);
+        return userAssembler.toResource(user);
     }
 
     @PostMapping("/users")
     public ResponseEntity<?> newUser(@RequestBody User newUser) throws URISyntaxException {
-        Resource<User> resource = assembler.toResource(userService.save(newUser));
+        Resource<User> resource = userAssembler.toResource(userService.save(newUser));
 
         return ResponseEntity
                 .created(new URI(resource.getId().expand().getHref()))
@@ -67,7 +67,7 @@ public class UserController {
         user.setUserType(newUser.getUserType());
         userService.save(user);
 
-        Resource<User> resource = assembler.toResource(user);
+        Resource<User> resource = userAssembler.toResource(user);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(resource);

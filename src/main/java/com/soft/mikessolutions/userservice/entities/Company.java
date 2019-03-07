@@ -33,4 +33,16 @@ public class Company extends BaseEntity {
     public Address getAddress() {
         return address;
     }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setVatIdNumber(String vatIdNumber) {
+        this.vatIdNumber = vatIdNumber;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }
