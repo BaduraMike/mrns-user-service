@@ -8,10 +8,6 @@ import java.util.Set;
 @Entity
 public class Address extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String street;
     private String streetNumber;
     private String postCode;
@@ -35,11 +31,6 @@ public class Address extends BaseEntity {
         this.postCode = postCode;
         this.city = city;
         this.country = country;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
     }
 
     public String getStreet() {

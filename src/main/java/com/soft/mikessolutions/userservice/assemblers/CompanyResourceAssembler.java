@@ -15,6 +15,7 @@ public class CompanyResourceAssembler implements ResourceAssembler<Company, Reso
     @Override
     public Resource<Company> toResource(Company company) {
         return new Resource<>(company,
+                linkTo(methodOn(CompanyController.class).one(company.getId())).withSelfRel(),
                 linkTo(methodOn(CompanyController.class).all()).withRel("companies"));
     }
 }
