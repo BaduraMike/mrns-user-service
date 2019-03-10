@@ -26,7 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserWebLayerTest {
-
     private final String BASE_URL = "/users";
 
     @Autowired

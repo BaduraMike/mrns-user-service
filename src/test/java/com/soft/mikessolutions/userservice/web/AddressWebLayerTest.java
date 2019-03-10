@@ -27,6 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AddressWebLayerTest {
+    private final String ADDRESS_BASE_URL = "/addresses";
+    private final String USER_BASE_URL = "/users";
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,9 +38,6 @@ public class AddressWebLayerTest {
 
     @Autowired
     private UserService userService;
-
-    private final String ADDRESS_BASE_URL = "/addresses";
-    private final String USER_BASE_URL = "/users";
 
     @Test
     public void getAllAddressesShouldReturnHttpStatus200Ok() throws Exception {
