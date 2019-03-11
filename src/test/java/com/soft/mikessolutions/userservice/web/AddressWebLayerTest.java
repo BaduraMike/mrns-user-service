@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.soft.mikessolutions.userservice.entities.Address;
+import com.soft.mikessolutions.userservice.entities.User;
 import com.soft.mikessolutions.userservice.services.AddressService;
 import com.soft.mikessolutions.userservice.services.UserService;
 import org.junit.Test;
@@ -146,6 +147,26 @@ public class AddressWebLayerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteChildAddressByExistingIdShouldReturnHttpStatus400BadRequestForDataIntegrationViolation()
+            throws Exception {
+        User user = new User();
+        Address address = new Address();
+        addressService.save(address);
+        user.setAddress(address);
+        userService.save(user);
+
+        long id = addressService.findAll().size();
+        String urlToExistingChildCompany = ADDRESS_BASE_URL + "/" + id;
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .delete(urlToExistingChildCompany)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
     private MockHttpServletRequestBuilder createJsonRequest(String URL, String street, String streetNumber, String postCode,
