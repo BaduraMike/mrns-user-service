@@ -29,20 +29,19 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldFindUserByExistingId() {
-        long id = userService.findAll().size();
-
-        Assert.assertNotNull(userService.findById(id));
+        long existingId = userService.findAll().size();
+        Assert.assertNotNull(userService.findById(existingId));
     }
 
     @Test
     public void shouldThrowUserNotFoundExceptionForNonExistingId() {
         //GIVEN
         //WHEN
-        Long id = (long) (userService.findAll().size() + 1);
+        Long nonExistingId = (long) (userService.findAll().size() + 1);
         //THEN
         expectedException.expect(UserNotFoundException.class);
-        expectedException.expectMessage("User with {id} = " + id + " not found.");
-        userService.findById(id);
+        expectedException.expectMessage("User with {id} = " + nonExistingId + " not found.");
+        userService.findById(nonExistingId);
     }
 
     @Test

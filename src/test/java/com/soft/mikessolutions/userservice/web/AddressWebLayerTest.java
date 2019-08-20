@@ -47,7 +47,7 @@ public class AddressWebLayerTest {
 
     @Test
     public void getAddressByExistingIdShouldReturnHttpStatus200Ok() throws Exception {
-        long id = addressService.findAll().size();
+        long id = addressService.findAll().size()-1;
         String urlToExistingAddress = ADDRESS_BASE_URL + "/" + id;
 
         this.mockMvc.perform(get(urlToExistingAddress)).andDo(print()).andExpect(status().isOk());
@@ -77,7 +77,7 @@ public class AddressWebLayerTest {
 
     @Test
     public void putAddressByExistingIdShouldUpdateAddressAndReturnHttpStatus204NoContent() throws Exception {
-        long id = addressService.findAll().size();
+        long id = addressService.findAll().size()-1;
         String existingAddressPutUrl = ADDRESS_BASE_URL + "/" + id;
         MockHttpServletRequestBuilder builder = createJsonRequest(existingAddressPutUrl, "ul.Janowicka",
                 "09-090", null, null, null);
@@ -90,7 +90,7 @@ public class AddressWebLayerTest {
 
     @Test
     public void putAddressByNonExistingIdShouldReturnHttpStatus404NotFound() throws Exception {
-        long id = addressService.findAll().size() + 1;
+        long id = addressService.findAll().size() + 10;
         String nonExistingAddressPutUrl = ADDRESS_BASE_URL + "/" + id;
         MockHttpServletRequestBuilder builder = createJsonRequest(nonExistingAddressPutUrl, "ul.Janowicka",
                 "09-090", null, null, null);
@@ -107,7 +107,7 @@ public class AddressWebLayerTest {
                 + ADDRESS_BASE_URL + "/" + addressService.findAll().size();
         long existingAddressId = addressService.findAll().size();
         Address existingAddress = addressService.findById(existingAddressId);
-        String randomStreetNumber = String.valueOf(Math.random() * 12345) + "XYZ";
+        String randomStreetNumber = (Math.random() * 12345) + "XYZ";
 
         MockHttpServletRequestBuilder builder = createJsonRequest(URL, existingAddress.getStreet(),
                 randomStreetNumber, existingAddress.getPostCode(), existingAddress.getCity(),
@@ -138,7 +138,7 @@ public class AddressWebLayerTest {
 
     @Test
     public void deleteAddressByExistingIdShouldReturnHttpStatus204NoContent() throws Exception {
-        long id = addressService.findAll().size();
+        long id = addressService.findAll().size()-1;
         String urlToExistingAddress = ADDRESS_BASE_URL + "/" + id;
 
         this.mockMvc.perform(MockMvcRequestBuilders
