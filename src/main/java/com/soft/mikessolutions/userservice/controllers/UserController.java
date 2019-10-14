@@ -28,18 +28,25 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public Resources<Resource<User>> all() {
+    public Resources<Resource<User>> getAllUsers() {
         List<Resource<User>> users = userService.findAll().stream()
                 .map(userAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(users,
-                linkTo(methodOn(UserController.class).all()).withRel("users"));
+                linkTo(methodOn(UserController.class).getAllUsers()).withRel("users"));
     }
 
     @GetMapping("/users/{id:\\d+}")
-    public Resource<User> one(@PathVariable Long id) {
+    public Resource<User> getUserById(@PathVariable Long id) {
         User user = userService.findById(id);
+
+        return userAssembler.toResource(user);
+    }
+
+    @GetMapping(value = "/users/email/{email}")
+    public Resource<User> getUserByEmail(@PathVariable String email) {
+        User user = userService.findByEmail(email);
 
         return userAssembler.toResource(user);
     }

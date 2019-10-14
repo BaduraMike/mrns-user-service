@@ -98,7 +98,7 @@ public class CompanyServiceImplTest {
         companyService.save(newCompany);
         int preDeleteCompanyCount = companyService.findAll().size();
         //WHEN
-        companyService.deleteById(newCompany.getId());
+        companyService.deleteById(newCompany.getIdentityNumber());
         int postDeleteCompanyCount = companyService.findAll().size();
         //THEN
         Assert.assertEquals(1, preDeleteCompanyCount - postDeleteCompanyCount);

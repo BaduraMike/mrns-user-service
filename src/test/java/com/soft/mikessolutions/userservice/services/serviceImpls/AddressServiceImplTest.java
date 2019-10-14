@@ -99,7 +99,7 @@ public class AddressServiceImplTest {
         addressService.save(newAddress);
         int preDeleteAddressCount = addressService.findAll().size();
         //WHEN
-        addressService.deleteById(newAddress.getId());
+        addressService.deleteById(newAddress.getIdentityNumber());
         int postDeleteAddressCount = addressService.findAll().size();
         //THEN
         Assert.assertEquals(1, preDeleteAddressCount - postDeleteAddressCount);

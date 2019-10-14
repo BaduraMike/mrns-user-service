@@ -77,7 +77,7 @@ public class UserServiceImplTest {
         userService.save(newUser);
         int preDeleteUserCount = userService.findAll().size();
         //WHEN
-        userService.deleteById(newUser.getId());
+        userService.deleteById(newUser.getIdentityNumber());
         int postDeleteUserCount = userService.findAll().size();
         //THEN
         Assert.assertEquals(1, preDeleteUserCount - postDeleteUserCount);

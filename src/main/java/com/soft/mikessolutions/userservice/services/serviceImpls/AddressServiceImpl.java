@@ -48,7 +48,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void deleteById(Long id) {
-        addressRepository.deleteById(findById(id).getId());
+        addressRepository.deleteById(findById(id).getIdentityNumber());
     }
 
     //query database by example if address with the given parameters exists:
@@ -61,7 +61,7 @@ public class AddressServiceImpl implements AddressService {
 
         if(addressRepository.exists(addressExample)){
             Address existingAddress = findByAllParameters(street, streetNumber, postCode, city ,country);
-            throw new AddressAlreadyExistsException(existingAddress.getId());
+            throw new AddressAlreadyExistsException(existingAddress.getIdentityNumber());
         }
     }
 }

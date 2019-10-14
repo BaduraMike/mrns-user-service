@@ -36,17 +36,17 @@ public class CompanyController {
     }
 
     @GetMapping("/companies")
-    public Resources<Resource<Company>> all() {
+    public Resources<Resource<Company>> getAllCompanies() {
         List<Resource<Company>> companies = companyService.findAll().stream()
                 .map(companyAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(companies,
-                linkTo(methodOn(CompanyController.class).all()).withRel("companies"));
+                linkTo(methodOn(CompanyController.class).getAllCompanies()).withRel("companies"));
     }
 
     @GetMapping("/companies/{id:\\d+}")
-    public Resource<Company> one(@PathVariable Long id) {
+    public Resource<Company> getCompanyById(@PathVariable Long id) {
         Company company = companyService.findById(id);
 
         return companyAssembler.toResource(company);

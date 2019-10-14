@@ -15,7 +15,7 @@ public class AddressResourceAssembler implements ResourceAssembler<Address, Reso
     @Override
     public Resource<Address> toResource(Address address) {
         return new Resource<>(address,
-                linkTo(methodOn(AddressController.class).one(address.getId())).withSelfRel(),
-                linkTo(methodOn(AddressController.class).all()).withRel("addresses"));
+                linkTo(methodOn(AddressController.class).getAddressById(address.getIdentityNumber())).withSelfRel(),
+                linkTo(methodOn(AddressController.class).getAllAddresses()).withRel("addresses"));
     }
 }

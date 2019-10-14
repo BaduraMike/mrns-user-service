@@ -36,17 +36,17 @@ public class AddressController {
     }
 
     @GetMapping("/addresses")
-    public Resources<Resource<Address>> all() {
+    public Resources<Resource<Address>> getAllAddresses() {
         List<Resource<Address>> addresses = addressService.findAll().stream()
                 .map(addressAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(addresses,
-                linkTo(methodOn(AddressController.class).all()).withRel("addresses"));
+                linkTo(methodOn(AddressController.class).getAllAddresses()).withRel("addresses"));
     }
 
     @GetMapping("/addresses/{id:\\d+}")
-    public Resource<Address> one(@PathVariable Long id) {
+    public Resource<Address> getAddressById(@PathVariable Long id) {
         Address address = addressService.findById(id);
 
         return addressAssembler.toResource(address);
